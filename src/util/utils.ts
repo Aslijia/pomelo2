@@ -1,5 +1,4 @@
 
-
 /**
  * Get the count of elements of object
  */

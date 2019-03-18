@@ -325,8 +325,11 @@ export interface ServerInfo {
 }
 
 export interface FakeSession {
+    /// user id :string
     uid: string;
-    id: string,
+    /// session id :string;
+    id: string;
+    /// session server id :string;
     frontendId: string;
 }
 
@@ -347,7 +350,11 @@ export interface BackendSession {
 
     export(): { [name: string]: any };
 
+    /// user id :string
     uid: string;
+    /// session id :string;
+    id: string;
+    /// session server id :string;
     frontendId: string;
 }
 
