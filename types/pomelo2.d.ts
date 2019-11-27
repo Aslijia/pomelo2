@@ -109,7 +109,7 @@ export interface GlobalChannelService {
      * @param sid   frontend server id
      * @param cb  callback
      */
-    add(name: string, uid: string, sid: string, cb: Function): void;
+    add(name: string, uid: number, sid: string, cb: Function): void;
 
     /**
      * 离开
@@ -119,7 +119,7 @@ export interface GlobalChannelService {
      * @param sid   frontend server id
      * @param cb    callback
      */
-    leave(name: string, uid: string, sid: string, cb: Function): void;
+    leave(name: string, uid: number, sid: string, cb: Function): void;
 
     /**
      * 获取指定链接服务器上的所有玩家
@@ -289,11 +289,11 @@ export interface StatusService {
     stop(cb: Function): void;
     clean(cb: Function): void;
 
-    add(uid: string, sid: string, frontendId: string): Promise<any>;
-    leave(uid: string, sid: string): Promise<any>;
-    getSidsByUid(uid: string): Promise<string[]>;
-    getFrontendIdsByUid(uid: string): Promise<string[]>;
-    getStatusByUid(uid: string): Promise<boolean>;
+    add(uid: number, sid: string, frontendId: string): Promise<any>;
+    leave(uid: number, sid: string): Promise<any>;
+    getSidsByUid(uid: number): Promise<string[]>;
+    getFrontendIdsByUid(uid: number): Promise<string[]>;
+    getStatusByUid(uid: number): Promise<boolean>;
     pushByUids(uids: string[], route: string, msg: any): Promise<any>;
 }
 
@@ -330,7 +330,7 @@ export interface ServerInfo {
 
 export interface FakeSession {
     /// user id :string
-    uid: string;
+    uid: number;
     /// session id :string;
     id: string;
     /// session server id :string;
@@ -340,9 +340,9 @@ export interface FakeSession {
 export interface BackendSession {
     new(opts: object, service: BackendSessionService): BackendSession;
 
-    bind(uid: string, cb: Function): void;
+    bind(uid: number, cb: Function): void;
 
-    unbind(uid: string, cb: Function): void;
+    unbind(uid: number, cb: Function): void;
 
     set(key: string, value: any): void;
 
@@ -355,7 +355,7 @@ export interface BackendSession {
     export(): { [name: string]: any };
 
     /// user id :string
-    uid: string;
+    uid: number;
     /// session id :string;
     id: string;
     /// session server id :string;
@@ -371,15 +371,15 @@ export interface BackendSessionService {
 
     get(frontendId: string, sid: string, cb: Function): void;
 
-    getByUid(frontendId: string, uid: string, cb: Function): void;
+    getByUid(frontendId: string, uid: number, cb: Function): void;
 
     kickBySid(frontendId: string, sid: string, reason: any, cb: Function): void;
 
-    kickByUid(frontendId: string, uid: string, reason: any, cb: Function): void;
+    kickByUid(frontendId: string, uid: number, reason: any, cb: Function): void;
 
-    bind(frontendId: string, sid: string, uid: string, cb: Function): void;
+    bind(frontendId: string, sid: string, uid: number, cb: Function): void;
 
-    unbind(frontendId: string, sid: string, uid: string, cb: Function): void;
+    unbind(frontendId: string, sid: string, uid: number, cb: Function): void;
 
     push(frontendId: string, sid: string, key: string, value: object, cb: Function): void;
 
@@ -389,15 +389,15 @@ export interface BackendSessionService {
 export interface Channel {
     new(name: string, service: ChannelService): Channel;
 
-    add(uid: string, sid: string): boolean;
+    add(uid: number, sid: string): boolean;
 
-    leave(uid: string, sid: string): boolean;
+    leave(uid: number, sid: string): boolean;
 
     getUserAmount(): number;
 
     getMembers(): Array<{ sid: string;[idx: string]: any }>;
 
-    getMember(uid: string): { sid: string;[idx: string]: any };
+    getMember(uid: number): { sid: string;[idx: string]: any };
 
     destroy(): void;
 
@@ -419,23 +419,23 @@ export interface ChannelService {
 
     destroyChannel(name: string): void;
 
-    pushMessageByUids(route: string, msg: object, uids: Array<{ uid: string; sid: string }>, opts: object, cb: Function): void;
+    pushMessageByUids(route: string, msg: object, uids: Array<{ uid: number; sid: string }>, opts: object, cb: Function): void;
 
-    pushMessageByUids(msg: object, uids: Array<{ uid: string; sid: string }>, opts?: object, cb?: Function): void;
+    pushMessageByUids(msg: object, uids: Array<{ uid: number; sid: string }>, opts?: object, cb?: Function): void;
 
-    pushMessageByUids(msg: object, uids: Array<{ uid: string; sid: string }>, cb?: Function): void;
+    pushMessageByUids(msg: object, uids: Array<{ uid: number; sid: string }>, cb?: Function): void;
 
     broadcast(stype: string, route: string, msg: object, opts: object, cb: Function): void;
 }
 
 export interface ConnectionService {
-    addLoginedUser(uid: string, info: object): void;
+    addLoginedUser(uid: number, info: object): void;
 
-    updateUserInfo(uid: string, info: object): void;
+    updateUserInfo(uid: number, info: object): void;
 
     increaseConnectionCount(): void;
 
-    removeLoginedUser(uid: string): void;
+    removeLoginedUser(uid: number): void;
 
     decreaseConnectionCount(): void;
 
@@ -592,11 +592,11 @@ export interface ServerComponent {
 }
 
 export interface FrontendSession extends EventEmitter {
-    uid: string;
+    uid: number;
 
-    bind(uid: string, cb: Function): void;
+    bind(uid: number, cb: Function): void;
 
-    unbind(uid: string, cb: Function): void;
+    unbind(uid: number, cb: Function): void;
 
     set(key: any, value: any): void;
 
@@ -610,15 +610,15 @@ export interface FrontendSession extends EventEmitter {
 }
 
 export interface Session extends EventEmitter {
-    uid: string;
+    uid: number;
     id: string;
     frontendId: string;
 
     toFrontendSession(): FrontendSession;
 
-    bind(uid: string): void;
+    bind(uid: number): void;
 
-    bind(uid: string): void;
+    bind(uid: number): void;
 
     set(key: string | object, value: any): void;
 
@@ -640,13 +640,13 @@ export interface Session extends EventEmitter {
 export interface SessionService {
     create(sid: string, frontendId: string, socket: Socket): Session;
 
-    bind(sid: string, uid: string, cb: Function): void;
+    bind(sid: string, uid: number, cb: Function): void;
 
-    unbind(sid: string, uid: string, cb: Function): void;
+    unbind(sid: string, uid: number, cb: Function): void;
 
     get(sid: string): Session;
 
-    getByUid(uid: string): Array<Session>;
+    getByUid(uid: number): Array<Session>;
 
     remove(sid: string): void;
 
@@ -654,7 +654,7 @@ export interface SessionService {
 
     importAll(sid: string, settings: object, cb: Function): void;
 
-    kick(uid: string, reason: string, cb: Function): void;
+    kick(uid: number, reason: string, cb: Function): void;
 
     kickBySessionId(sid: string, reason: string, cb: Function): void;
 
@@ -662,7 +662,7 @@ export interface SessionService {
 
     sendMessage(sid: string, msg: object): boolean;
 
-    sendMessageByUid(uid: string, msg: object): boolean | undefined;
+    sendMessageByUid(uid: number, msg: object): boolean | undefined;
 
     forEachSession(cb: Function): void;
 
