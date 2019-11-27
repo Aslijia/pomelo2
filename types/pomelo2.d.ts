@@ -285,12 +285,16 @@ export interface Application {
 }
 
 export interface StatusService {
-    add(uid: string, sid: string, cb: Function): any;
-    leave(uid: string, sid: string, cb: Function): any;
-    getSidsByUid(uid: string, cb: Function): any;
-    getStatusByUid(uid: string, cb: Function): any;
-    getStatusByUids(uid: string[], cb: Function): any;
-    pushByUids(uids: string[], route: string, msg: object, cb: Function): any;
+    start(cb: Function): void;
+    stop(cb: Function): void;
+    clean(cb: Function): void;
+
+    add(uid: string, sid: string): Promise<any>;
+    leave(uid: string, sid: string): Promise<any>;
+    getSidsByUid(uid: string): Promise<string[]>;
+    getFrontendIdsByUid(uid: string): Promise<string[]>;
+    getStatusByUid(uid: string): Promise<boolean>;
+    pushByUids(uids: string[], route: string, msg: any): Promise<any>;
 }
 
 export interface Connector extends EventEmitter {
