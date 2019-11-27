@@ -289,7 +289,7 @@ export interface StatusService {
     stop(cb: Function): void;
     clean(cb: Function): void;
 
-    add(uid: string, sid: string): Promise<any>;
+    add(uid: string, sid: string, frontendId: string): Promise<any>;
     leave(uid: string, sid: string): Promise<any>;
     getSidsByUid(uid: string): Promise<string[]>;
     getFrontendIdsByUid(uid: string): Promise<string[]>;
