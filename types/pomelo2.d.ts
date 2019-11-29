@@ -194,6 +194,8 @@ export interface Application {
 
     loadConfigBaseApp(key: string, val: string, reload: boolean): void;
 
+    getConfigBasePath(val: string): string | undefined;
+
     loadConfig(key: string, val: string): void;
 
     route(serverType: string, routeFunc: Function): Application;
