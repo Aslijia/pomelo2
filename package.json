@@ -37,7 +37,7 @@
     "@types/node": "^12.12.14"
   },
   "scripts": {
-    "latest": "git checkout .&&git pull&&git submodule update&&npm install -s&&tsc -p tsconfig.json"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
