@@ -296,7 +296,7 @@ export interface StatusService {
     getSidsByUid(uid: number): Promise<string[]>;
     getFrontendIdsByUid(uid: number): Promise<string[]>;
     getStatusByUid(uid: number): Promise<boolean>;
-    pushByUids(uids: string[], route: string, msg: any): Promise<any>;
+    pushByUids(uids: number[], route: string, msg: any): Promise<any>;
 }
 
 export interface Connector extends EventEmitter {
