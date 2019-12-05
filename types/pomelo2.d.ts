@@ -293,7 +293,7 @@ export interface StatusService {
 
     add(uid: number, sid: string, frontendId: string): Promise<any>;
     leave(uid: number, sid: string): Promise<any>;
-    getSidsByUid(uid: number): Promise<string[]>;
+    getSidsByUid(uid: number): Promise<{ [frontedId: string]: string[] }>;
     getFrontendIdsByUid(uid: number): Promise<string[]>;
     getStatusByUid(uid: number): Promise<boolean>;
     pushByUids(uids: number[], route: string, msg: any): Promise<any>;
