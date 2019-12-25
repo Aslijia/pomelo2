@@ -1,6 +1,6 @@
 {
   "name": "pomelo2",
-  "version": "1.2.11",
+  "version": "1.2.12",
   "description": "Pomelo is a fast, scalable game server framework forameworks.",
   "main": "index.js",
   "directories": {

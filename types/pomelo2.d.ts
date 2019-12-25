@@ -741,3 +741,5 @@ export interface MasterAgent {
 
     notifyCommand(command: string, moduleId: string, msg: any): boolean;
 }
+
+export const app: Application;
