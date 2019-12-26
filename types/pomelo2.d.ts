@@ -596,6 +596,10 @@ export interface ServerComponent {
 export interface FrontendSession extends EventEmitter {
     uid: number;
 
+    id: string;
+
+    frontendId: string;
+
     bind(uid: number, cb: Function): void;
 
     unbind(uid: number, cb: Function): void;
@@ -743,3 +747,4 @@ export interface MasterAgent {
 }
 
 export const app: Application;
+export const connectors: any;
