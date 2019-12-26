@@ -747,4 +747,3 @@ export interface MasterAgent {
 }
 
 export const app: Application;
-export const connectors: any;
