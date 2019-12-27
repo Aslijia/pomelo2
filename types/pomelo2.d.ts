@@ -109,7 +109,7 @@ export interface GlobalChannelService {
      * @param sid   frontend server id
      * @param cb  callback
      */
-    add(name: string, uid: number, sid: string, cb: Function): void;
+    add(name: string, uid: number, sid: string): Promise<void>;
 
     /**
      * 离开
@@ -119,7 +119,7 @@ export interface GlobalChannelService {
      * @param sid   frontend server id
      * @param cb    callback
      */
-    leave(name: string, uid: number, sid: string, cb: Function): void;
+    leave(name: string, uid: number, sid: string): Promise<void>;
 
     /**
      * 获取指定链接服务器上的所有玩家
@@ -128,7 +128,7 @@ export interface GlobalChannelService {
      * @param sid   frontend server id
      * @param cb    callback
      */
-    getMembersBySid(name: string, sid: string, cb: Function): void;
+    getMembersBySid(name: string, sid: string): Promise<string[]>;
 
     /**
      * 获取指定的 channel 下所有的玩家
@@ -136,7 +136,7 @@ export interface GlobalChannelService {
      * @param name  channel name
      * @param cb    callback
      */
-    getMembersByChannelName(stype: string, name: string, cb: Function): void;
+    getMembersByChannelName(stype: string, name: string): Promise<string[]>;
 
     /**
      * 推送消息
@@ -148,14 +148,14 @@ export interface GlobalChannelService {
      * @param opts  选项
      * @param cb    callback
      */
-    pushMessage(stype: string, route: string, msg: any, name: string, opts: any, cb: Function): void;
+    pushMessage(stype: string, route: string, msg: any, name: string, opts: any): Promise<any>;
 
     /**
      * 销毁 channel
      * @param name  channel name
      * @param cb    callback
      */
-    destroyChannel(name: string, cb: Function): void;
+    destroyChannel(name: string): Promise<void>;
 }
 
 export interface Application {
