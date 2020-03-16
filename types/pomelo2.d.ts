@@ -156,6 +156,12 @@ export interface GlobalChannelService {
      * @param cb    callback
      */
     destroyChannel(name: string): Promise<void>;
+
+    /**
+     * 获取用户订阅的频道
+     * @param uid 
+     */
+    getChannelsByMember(uid: number): Promise<string[] | undefined>;
 }
 
 export interface Application {
