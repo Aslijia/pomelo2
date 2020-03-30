@@ -1,6 +1,6 @@
 {
   "name": "pomelo2",
-  "version": "1.2.22",
+  "version": "1.2.23",
   "description": "Pomelo is a fast, scalable game server framework forameworks.",
   "main": "index.js",
   "directories": {
@@ -22,7 +22,7 @@
     "mqtt": "^2.18.8",
     "node-bignumber": "^1.2.1",
     "node-redis-pubsub": "^4.0.0",
-    "pomelo2-admin": "^1.1.4",
+    "pomelo2-admin": "^1.1.5",
     "pomelo2-loader": "^1.0.0",
     "pomelo2-logger": "^1.1.5",
     "pomelo2-protobuf": "^1.0.0",
