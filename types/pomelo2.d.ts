@@ -161,7 +161,7 @@ export interface GlobalChannelService {
      * 获取用户订阅的频道
      * @param uid 
      */
-    getChannelsByMember(uid: number): Promise<string[] | undefined>;
+    getChannelsByMember(uid: number): Promise<{ name: string, sid: string }[]>;
 }
 
 export interface Application {
@@ -303,6 +303,7 @@ export interface StatusService {
     getFrontendIdsByUid(uid: number): Promise<string[]>;
     getStatusByUid(uid: number): Promise<boolean>;
     pushByUids(uids: number[], route: string, msg: any): Promise<any>;
+    getUids(): Promise<string[]>;
 }
 
 export interface Connector extends EventEmitter {
