@@ -140,6 +140,14 @@ export interface GlobalChannelService {
 	leave(name: string, uid: number, sid: string): Promise<void>
 
 	/**
+	 * 查询指定玩家是否在频道内
+	 *
+	 * @param name
+	 * @param uid
+	 */
+	isMemberInChannel(name: string, uid: number): Promise<boolean>
+
+	/**
 	 * 获取指定链接服务器上的所有玩家
 	 *
 	 * @param name  channel name
@@ -147,6 +155,15 @@ export interface GlobalChannelService {
 	 * @param cb    callback
 	 */
 	getMembersBySid(name: string, sid: string): Promise<string[]>
+
+	/**
+	 * 获取指定频道内的玩家
+	 *
+	 * @param name  channel name
+	 * @param sid   frontend server id
+	 * @param cb    callback
+	 */
+	getMembersByChannel(name: string): Promise<string[]>
 
 	/**
 	 * 获取指定的 channel 下所有的玩家
