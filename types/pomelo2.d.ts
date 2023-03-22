@@ -1,22 +1,21 @@
 import { EventEmitter } from 'events'
 import { Socket } from 'net'
-import { NodeRedisPubSub } from 'node-redis-pubsub'
 
-export const version: string
+declare const version: string
 
-export const connectors: {
+declare const connectors: {
     readonly hybridconnector: new (port: number, host: string, opts?: object) => Connector
     readonly sioconnector: new (port: number, host: string, opts?: object) => Connector
     readonly udpconnector: new (port: number, host: string, opts?: object) => Connector
     readonly mqttconnector: new (port: number, host: string, opts?: object) => Connector
 }
 
-export const pushSchedulers: {
+declare const pushSchedulers: {
     readonly direct: new (app: Application, opts?: object) => DirectPushScheduler
     readonly buffer: new (app: Application, opts?: object) => BufferPushScheduler
 }
 
-export const events: {
+declare const events: {
     readonly ADD_SERVERS: string
     readonly REMOVE_SERVERS: string
     readonly REPLACE_SERVERS: string
@@ -29,7 +28,7 @@ export const events: {
     readonly START_ALL: string
 }
 
-export const components: {
+declare const components: {
     readonly backendSession: (app: Application) => BackendSessionService
     readonly channel: (app: Application, opts?: object) => ChannelService
     readonly connection: (app: Application) => ConnectionComponent
@@ -45,47 +44,47 @@ export const components: {
     readonly session: (app: Application, opts?: object) => SessionComponent
 }
 
-export const backendSession: (app: Application) => BackendSessionService
-export const channel: (app: Application, opts?: object) => ChannelService
-export const connection: (app: Application) => ConnectionComponent
-export const connector: (app: Application, opts?: object) => ConnectorComponent
-export const dictionary: (app: Application, opts?: object) => DictionaryComponent
+declare const backendSession: (app: Application) => BackendSessionService
+declare const channel: (app: Application, opts?: object) => ChannelService
+declare const connection: (app: Application) => ConnectionComponent
+declare const connector: (app: Application, opts?: object) => ConnectorComponent
+declare const dictionary: (app: Application, opts?: object) => DictionaryComponent
 
-export const master: (app: Application, opts?: object) => MasterComponent
-export const monitor: (app: Application, opts?: object) => MonitorComponent
-export const protobuf: (app: Application, opts?: object) => ProtobufComponent
-export const proxy: (app: Application, opts?: object) => ProxyComponent
-export const pushScheduler: (app: Application, opts?: object) => PushSchedulerComponent
-export const remote: (app: Application, opts?: object) => RemoteComponent
-export const server: (app: Application, opts?: object) => ServerComponent
-export const session: (app: Application, opts?: object) => SessionComponent
+declare const master: (app: Application, opts?: object) => MasterComponent
+declare const monitor: (app: Application, opts?: object) => MonitorComponent
+declare const protobuf: (app: Application, opts?: object) => ProtobufComponent
+declare const proxy: (app: Application, opts?: object) => ProxyComponent
+declare const pushScheduler: (app: Application, opts?: object) => PushSchedulerComponent
+declare const remote: (app: Application, opts?: object) => RemoteComponent
+declare const server: (app: Application, opts?: object) => ServerComponent
+declare const session: (app: Application, opts?: object) => SessionComponent
 
-export const filters: {
+declare const filters: {
     readonly serial: (timeout: number) => HandlerFilter
     readonly time: () => HandlerFilter
     readonly timeout: (timeout?: number, maxSize?: number) => HandlerFilter
     readonly toobusy: (maxLag: number) => HandlerFilter
 }
-export const serial: (timeout: number) => HandlerFilter
-export const time: () => HandlerFilter
-export const timeout: (timeout?: number, maxSize?: number) => HandlerFilter
-export const toobusy: (maxLag: number) => HandlerFilter
+declare const serial: (timeout: number) => HandlerFilter
+declare const time: () => HandlerFilter
+declare const timeout: (timeout?: number, maxSize?: number) => HandlerFilter
+declare const toobusy: (maxLag: number) => HandlerFilter
 
-export const rpcFilters: {
+declare const rpcFilters: {
     readonly rpcLog: () => RPCFilter
     readonly toobusy: (maxLag: number) => RPCFilter
 }
 
-export function createApp(opts?: object): Application
+declare function createApp(opts?: object): Application
 
-export interface ServerContext {
+declare interface ServerContext {
     app: Application
     reload(): Promise<any>
 
     [prop: string]: any
 }
 
-export interface GlobalChannelService {
+declare interface GlobalChannelService {
     /**
      * 添加玩家的指定 channel 内
      * @param name  channel name
@@ -93,7 +92,7 @@ export interface GlobalChannelService {
      * @param sid   frontend server id
      * @param cb  callback
      */
-    add(name: string, uid: number, sid: string): Promise<void>
+    add(name: string, uid: number | string, sid: string): Promise<void>
 
     /**
      * 离开
@@ -103,7 +102,7 @@ export interface GlobalChannelService {
      * @param sid   frontend server id
      * @param cb    callback
      */
-    leave(name: string, uid: number, sid?: string): Promise<void>
+    leave(name: string, uid: number | string, sid?: string): Promise<void>
 
     /**
      * 查询指定玩家是否在频道内
@@ -111,7 +110,7 @@ export interface GlobalChannelService {
      * @param name
      * @param uid
      */
-    isMemberInChannel(name: string, uid: number): Promise<boolean>
+    isMemberInChannel(name: string, uid: number | string): Promise<boolean>
 
     /**
      * 获取指定链接服务器上的所有玩家
@@ -162,10 +161,10 @@ export interface GlobalChannelService {
      * 获取用户订阅的频道
      * @param uid
      */
-    getChannelsByMember(uid: number): Promise<{ name: string; sid: string }[]>
+    getChannelsByMember(uid: number | string): Promise<{ name: string; sid: string }[]>
 }
 
-export interface Application {
+declare interface Application {
     rpc: any
 
     readonly env: string
@@ -288,26 +287,25 @@ export interface Application {
     readonly localSessionService: BackendSessionService
     readonly event: EventEmitter
 
-    readonly emitter: NodeRedisPubSub
     readonly globalChannelService: GlobalChannelService
     readonly statusService: StatusService
 }
 
-export interface StatusService {
+declare interface StatusService {
     start(cb: Function): void
     stop(cb: Function): void
     clean(cb: Function): void
 
-    add(uid: number, sid: string, frontendId: string): Promise<any>
-    leave(uid: number, sid: string): Promise<any>
-    getSidsByUid(uid: number): Promise<{ [frontedId: string]: string[] }>
-    getFrontendIdsByUid(uid: number): Promise<string[]>
-    getStatusByUid(uid: number): Promise<boolean>
+    add(uid: number | string, sid: string, frontendId: string): Promise<any>
+    leave(uid: number | string, sid: string): Promise<any>
+    getSidsByUid(uid: number | string): Promise<{ [frontedId: string]: string[] }>
+    getFrontendIdsByUid(uid: number | string): Promise<string[]>
+    getStatusByUid(uid: number | string): Promise<boolean>
     pushByUids(uids: number[], route: string, msg: any): Promise<any>
     getUids(): Promise<string[]>
 }
 
-export interface Connector extends EventEmitter {
+declare interface Connector extends EventEmitter {
     new (port: number, host: string, opts: object): Connector
 
     start(cb: Function): void
@@ -317,17 +315,17 @@ export interface Connector extends EventEmitter {
     close?(): void
 }
 
-export interface CallbackMap {
+declare interface CallbackMap {
     [name: string]: { (cb: Function): void }
 }
 
-export interface MasterInfo {
+declare interface MasterInfo {
     id: string
     host: string
     port: number
 }
 
-export interface ServerInfo {
+declare interface ServerInfo {
     id: string
     host: string
     port: number
@@ -338,9 +336,9 @@ export interface ServerInfo {
     instance?: string
 }
 
-export interface FakeSession {
+declare interface FakeSession {
     /// user id :string
-    uid: number
+    uid: number | string
     /// session id :string;
     id: string
     /// session server id :string;
@@ -348,12 +346,12 @@ export interface FakeSession {
     [ids: string]: any
 }
 
-export interface BackendSession {
+declare interface BackendSession {
     new (opts: object, service: BackendSessionService): BackendSession
 
-    bind(uid: number, cb: Function): void
+    bind(uid: number | string, cb: Function): void
 
-    unbind(uid: number, cb: Function): void
+    unbind(uid: number | string, cb: Function): void
 
     set(key: string, value: any): void
 
@@ -366,14 +364,14 @@ export interface BackendSession {
     export(): { [name: string]: any }
 
     /// user id :string
-    uid: number
+    uid: number | string
     /// session id :string;
     id: string
     /// session server id :string;
     frontendId: string
 }
 
-export interface BackendSessionService {
+declare interface BackendSessionService {
     readonly name: string
 
     new (app: Application): BackendSessionService
@@ -382,33 +380,33 @@ export interface BackendSessionService {
 
     get(frontendId: string, sid: string, cb: Function): void
 
-    getByUid(frontendId: string, uid: number, cb: Function): void
+    getByUid(frontendId: string, uid: number | string, cb: Function): void
 
     kickBySid(frontendId: string, sid: string, reason: any, cb: Function): void
 
-    kickByUid(frontendId: string, uid: number, reason: any, cb: Function): void
+    kickByUid(frontendId: string, uid: number | string, reason: any, cb: Function): void
 
-    bind(frontendId: string, sid: string, uid: number, cb: Function): void
+    bind(frontendId: string, sid: string, uid: number | string, cb: Function): void
 
-    unbind(frontendId: string, sid: string, uid: number, cb: Function): void
+    unbind(frontendId: string, sid: string, uid: number | string, cb: Function): void
 
     push(frontendId: string, sid: string, key: string, value: object, cb: Function): void
 
     pushAll(frontendId: string, sid: string, settings: object, cb: Function): void
 }
 
-export interface Channel {
+declare interface Channel {
     new (name: string, service: ChannelService): Channel
 
-    add(uid: number, sid: string): boolean
+    add(uid: number | string, sid: string): boolean
 
-    leave(uid: number, sid: string): boolean
+    leave(uid: number | string, sid: string): boolean
 
     getUserAmount(): number
 
     getMembers(): Array<{ sid: string; [idx: string]: any }>
 
-    getMember(uid: number): { sid: string; [idx: string]: any }
+    getMember(uid: number | string): { sid: string; [idx: string]: any }
 
     destroy(): void
 
@@ -419,7 +417,7 @@ export interface Channel {
     pushMessage(msg: object, cb?: Function): void
 }
 
-export interface ChannelService {
+declare interface ChannelService {
     new (app: Application, opts?: object): ChannelService
 
     start(cb: Function): void
@@ -430,23 +428,23 @@ export interface ChannelService {
 
     destroyChannel(name: string): void
 
-    pushMessageByUids(route: string, msg: object, uids: Array<{ uid: number; sid: string }>, opts: object, cb: Function): void
+    pushMessageByUids(route: string, msg: object, uids: Array<{ uid: number | string; sid: string }>, opts: object, cb: Function): void
 
-    pushMessageByUids(msg: object, uids: Array<{ uid: number; sid: string }>, opts?: object, cb?: Function): void
+    pushMessageByUids(msg: object, uids: Array<{ uid: number | string; sid: string }>, opts?: object, cb?: Function): void
 
-    pushMessageByUids(msg: object, uids: Array<{ uid: number; sid: string }>, cb?: Function): void
+    pushMessageByUids(msg: object, uids: Array<{ uid: number | string; sid: string }>, cb?: Function): void
 
     broadcast(stype: string, route: string, msg: object, opts: object, cb: Function): void
 }
 
-export interface ConnectionService {
-    addLoginedUser(uid: number, info: object): void
+declare interface ConnectionService {
+    addLoginedUser(uid: number | string, info: object): void
 
-    updateUserInfo(uid: number, info: object): void
+    updateUserInfo(uid: number | string, info: object): void
 
     increaseConnectionCount(): void
 
-    removeLoginedUser(uid: number): void
+    removeLoginedUser(uid: number | string): void
 
     decreaseConnectionCount(): void
 
@@ -458,11 +456,11 @@ export interface ConnectionService {
     }
 }
 
-export interface ConnectionComponent extends ConnectionService {
+declare interface ConnectionComponent extends ConnectionService {
     readonly name: string
 }
 
-export interface ConnectorComponent {
+declare interface ConnectorComponent {
     readonly name: string
 
     start(cb: Function): void
@@ -482,7 +480,7 @@ export interface ConnectorComponent {
     getPubKey(id: number | string): object
 }
 
-export interface DictionaryComponent {
+declare interface DictionaryComponent {
     readonly name: string
 
     start(cb: Function): void
@@ -494,7 +492,7 @@ export interface DictionaryComponent {
     getVersion(): string
 }
 
-export interface MasterComponent {
+declare interface MasterComponent {
     readonly name: string
 
     start(cb: Function): void
@@ -502,7 +500,7 @@ export interface MasterComponent {
     stop(force: boolean, cb: Function): void
 }
 
-export interface MonitorComponent {
+declare interface MonitorComponent {
     readonly name: string
 
     start(cb: Function): void
@@ -512,7 +510,7 @@ export interface MonitorComponent {
     reconnect(masterInfo: MasterInfo): void
 }
 
-export interface ProtobufComponent {
+declare interface ProtobufComponent {
     readonly name: string
 
     encode(key: string, msg: object): Buffer
@@ -528,7 +526,7 @@ export interface ProtobufComponent {
     setProtos(type: 'server' | 'client', path: string): void
 }
 
-export interface ProxyComponent {
+declare interface ProxyComponent {
     readonly name: string
 
     start(cb: Function): void
@@ -544,7 +542,7 @@ export interface ProxyComponent {
     rpcInvoke(serverId: string | number, msg: object, cb: Function): void
 }
 
-export interface PushSchedulerComponent {
+declare interface PushSchedulerComponent {
     readonly name: string
 
     afterStart(cb: Function): void
@@ -554,7 +552,7 @@ export interface PushSchedulerComponent {
     schedule(reqId: number, route: string, msg: object, recvs: Array<string>, opts: object, cb: Function): void
 }
 
-export interface RemoteComponent {
+declare interface RemoteComponent {
     readonly name: string
 
     start(cb: Function): void
@@ -562,7 +560,7 @@ export interface RemoteComponent {
     stop(force: boolean, cb: Function): void
 }
 
-export interface ServerComponent {
+declare interface ServerComponent {
     readonly name: string
 
     start(cb: Function): void
@@ -574,16 +572,16 @@ export interface ServerComponent {
     handle(msg: object, session: any, cb: Function): void
 }
 
-export interface FrontendSession extends EventEmitter {
-    uid: number
+declare interface FrontendSession extends EventEmitter {
+    uid: number | string
 
     id: string
 
     frontendId: string
 
-    bind(uid: number, cb: Function): void
+    bind(uid: number | string, cb: Function): void
 
-    unbind(uid: number, cb: Function): void
+    unbind(uid: number | string, cb: Function): void
 
     set(key: any, value: any): void
 
@@ -596,16 +594,16 @@ export interface FrontendSession extends EventEmitter {
     export(): object
 }
 
-export interface Session extends EventEmitter {
-    uid: number
+declare interface Session extends EventEmitter {
+    uid: number | string
     id: string
     frontendId: string
 
     toFrontendSession(): FrontendSession
 
-    bind(uid: number): void
+    bind(uid: number | string): void
 
-    bind(uid: number): void
+    bind(uid: number | string): void
 
     set(key: string | object, value: any): void
 
@@ -624,16 +622,16 @@ export interface Session extends EventEmitter {
     pushAll(cb: Function): void
 }
 
-export interface SessionService {
+declare interface SessionService {
     create(sid: string, frontendId: string, socket: Socket): Session
 
-    bind(sid: string, uid: number, cb: Function): void
+    bind(sid: string, uid: number | string, cb: Function): void
 
-    unbind(sid: string, uid: number, cb: Function): void
+    unbind(sid: string, uid: number | string, cb: Function): void
 
     get(sid: string): Session
 
-    getByUid(uid: number): Array<Session>
+    getByUid(uid: number | string): Array<Session>
 
     remove(sid: string): void
 
@@ -641,7 +639,7 @@ export interface SessionService {
 
     importAll(sid: string, settings: object, cb: Function): void
 
-    kick(uid: number, reason: string, cb: Function): void
+    kick(uid: number | string, reason: string, cb: Function): void
 
     kickBySessionId(sid: string, reason: string, cb: Function): void
 
@@ -649,7 +647,7 @@ export interface SessionService {
 
     sendMessage(sid: string, msg: object): boolean
 
-    sendMessageByUid(uid: number, msg: object): boolean | undefined
+    sendMessageByUid(uid: number | string, msg: object): boolean | undefined
 
     forEachSession(cb: Function): void
 
@@ -658,23 +656,23 @@ export interface SessionService {
     getSessionsCount(): number
 }
 
-export interface HandlerFilter {
+declare interface HandlerFilter {
     before(msg: object, session: Session, next: Function): void
 
     after(err: string | object | null, msg: object, session: Session, next: Function): void
 }
 
-export interface RPCFilter {
+declare interface RPCFilter {
     before(serverId: string, msg: object, opts: object, next: Function): void
 
     after(serverId: string, msg: object, opts: object, next: Function): void
 }
 
-export interface SessionComponent extends SessionService {
+declare interface SessionComponent extends SessionService {
     readonly name: string
 }
 
-export interface BufferPushScheduler {
+declare interface BufferPushScheduler {
     new (app: Application, opts?: object): this
 
     start(cb?: Function): void
@@ -684,13 +682,13 @@ export interface BufferPushScheduler {
     schedule(reqId: number, route: string, msg: object, recvs: Array<number | string>, opts?: object, cb?: Function): void
 }
 
-export interface DirectPushScheduler {
+declare interface DirectPushScheduler {
     new (app: Application, opts?: object): this
 
     schedule(reqId: number, route: string, msg: object, recvs: Array<number | string>, opts?: object, cb?: Function): void
 }
 
-export interface MasterAgent {
+declare interface MasterAgent {
     request(serverId: string, moduleId: string, msg: any, cb: Function): boolean
 
     requestServer(serverId: string, serverInfo: any, moduleId: string, msg: any, cb: Function): boolean
@@ -708,4 +706,4 @@ export interface MasterAgent {
     notifyCommand(command: string, moduleId: string, msg: any): boolean
 }
 
-export const app: Application
+declare const app: Application
