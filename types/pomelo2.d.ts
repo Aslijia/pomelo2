@@ -301,7 +301,7 @@ declare interface StatusService {
     getSidsByUid(uid: number | string): Promise<{ [frontedId: string]: string[] }>
     getFrontendIdsByUid(uid: number | string): Promise<string[]>
     getStatusByUid(uid: number | string): Promise<boolean>
-    pushByUids(uids: number[], route: string, msg: any): Promise<any>
+    pushByUids(uids: (string | number)[], route: string, msg: any): Promise<any>
     getUids(): Promise<string[]>
 }
 
@@ -615,7 +615,7 @@ declare interface Session extends EventEmitter {
 
     bind(uid: number | string): void
 
-    bind(uid: number | string): void
+    bind(uid: number | string, cb: () => void): void
 
     set(key: string | object, value: any): void
 
