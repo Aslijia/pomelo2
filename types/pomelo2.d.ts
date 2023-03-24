@@ -428,13 +428,25 @@ declare interface ChannelService {
 
     destroyChannel(name: string): void
 
-    pushMessageByUids(route: string, msg: object, uids: Array<{ uid: number | string; sid: string }>, opts: object, cb: Function): void
+    pushMessageByUids(msg: object, uids: Array<{ uid: number | string; sid: string }>, cb?: Function): void
 
     pushMessageByUids(msg: object, uids: Array<{ uid: number | string; sid: string }>, opts?: object, cb?: Function): void
 
-    pushMessageByUids(msg: object, uids: Array<{ uid: number | string; sid: string }>, cb?: Function): void
+    pushMessageByUids(route: string, msg: object, uids: Array<{ uid: number | string; sid: string }>, opts: object, cb: Function): void
 
-    broadcast(stype: string, route: string, msg: object, opts: object, cb: Function): void
+    /**
+     * Broadcast message to all the connected clients.
+     *
+     * @param  {String}   stype      frontend server type string
+     * @param  {String}   route      route string
+     * @param  {Object}   msg        message
+     * @param  {Object}   opts       user-defined broadcast options, optional
+     *                               opts.binded: push to binded sessions or all the sessions
+     *                               opts.filterParam: parameters for broadcast filter.
+     * @param  {Function} cb         callback
+     * @memberOf ChannelService
+     */
+    broadcast(stype: string, route: string, msg: object, opts: { binded?: boolean; filterParam?: any }, cb: Function): void
 }
 
 declare interface ConnectionService {
