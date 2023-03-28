@@ -410,11 +410,11 @@ declare interface Channel {
 
     destroy(): void
 
-    pushMessage(route: string, msg: object, opts: object, cb?: Function): void
+    pushMessage(msg: object, cb?: Function): void
 
     pushMessage(msg: object, opts: object, cb?: Function): void
 
-    pushMessage(msg: object, cb?: Function): void
+    pushMessage(route: string, msg: object, opts: object, cb?: Function): void
 }
 
 declare interface ChannelService {
