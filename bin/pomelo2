@@ -558,17 +558,14 @@ function reload(opts) {
         client.request(co.moduleId, { signal: 'reload', ids: serverIds, type: type }, function (err, fails) {
             if (!!err) {
                 console.error(err)
-            } else if (!!fails.length) {
-                console.info('reload fails server ids: %j', fails)
-            } else {
-                console.info(RELOAD_SERVER_INFO)
             }
+            console.log(fails)
             process.exit(0)
         })
     })
 }
 
-function info() {
+function info(opts) {
     var id = 'pomelo_info_' + Date.now()
     var serverIds = []
     var type = null
@@ -579,7 +576,9 @@ function info() {
         type = opts.type
     }
     connectToMaster(id, opts, function (client) {
-        client.request(co.moduleId, { signal: 'info', ids: serverIds, type: type }, function (err, data) {})
+        client.request(co.moduleId, { signal: 'info', ids: serverIds, type: type }, function (err, data) {
+            console.log(data)
+        })
     })
 }
 
