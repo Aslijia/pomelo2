@@ -84,86 +84,6 @@ declare interface ServerContext {
     [prop: string]: any
 }
 
-declare interface GlobalChannelService {
-    /**
-     * 添加玩家的指定 channel 内
-     * @param name  channel name
-     * @param uid   user id
-     * @param sid   frontend server id
-     * @param cb  callback
-     */
-    add(name: string, uid: number | string, sid: string): Promise<void>
-
-    /**
-     * 离开
-     *
-     * @param name  channel name
-     * @param uid   user id
-     * @param sid   frontend server id
-     * @param cb    callback
-     */
-    leave(name: string, uid: number | string, sid?: string): Promise<void>
-
-    /**
-     * 查询指定玩家是否在频道内
-     *
-     * @param name
-     * @param uid
-     */
-    isMemberInChannel(name: string, uid: number | string): Promise<boolean>
-
-    /**
-     * 获取指定链接服务器上的所有玩家
-     *
-     * @param name  channel name
-     * @param sid   frontend server id
-     * @param cb    callback
-     */
-    getMembersBySid(name: string, sid: string): Promise<string[]>
-
-    /**
-     * 获取指定频道内的玩家
-     *
-     * @param name  channel name
-     * @param sid   frontend server id
-     * @param cb    callback
-     */
-    getMembersByChannel(name: string): Promise<string[]>
-
-    /**
-     * 获取指定的 channel 下所有的玩家
-     * @param stype frontend server type name
-     * @param name  channel name
-     * @param cb    callback
-     */
-    getMembersByChannelName(stype: string, name: string): Promise<string[]>
-
-    /**
-     * 推送消息
-     *
-     * @param stype frontend server type name
-     * @param route 路由
-     * @param msg   消息
-     * @param name  channel name
-     * @param opts  选项
-     * @param cb    callback
-     */
-    pushMessage(stype: string, route: string, msg: any, name: string, opts: any): Promise<any>
-
-    /**
-     * 销毁 channel
-     * @param name  channel name
-     * @param cb    callback
-     */
-    destroyChannel(name: string): Promise<void>
-
-    /**
-     * 获取用户订阅的频道
-     * @param uid
-     */
-    getChannelsByMember(uid: number | string): Promise<{ name: string; sid: string }[]>
-}
-
 declare interface Application {
     rpc: any
 
@@ -287,7 +207,6 @@ declare interface Application {
     readonly localSessionService: BackendSessionService
     readonly event: EventEmitter
 
-    readonly globalChannelService: GlobalChannelService
     readonly statusService: StatusService
 }
 
